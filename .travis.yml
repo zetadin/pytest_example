@@ -1,11 +1,48 @@
 language: python
 sudo: false
 
+
+branches:
+    only:
+        - master
+
 python:
-   - "3.6"
-   - "3.7"
+    - "3.6"
+    - "3.7"
 
 # command to run tests
 script:
-   - pytest
-   
+    - pytest
+
+  
+# Run Doxygen separately as a matrix
+matrix:
+  include:
+
+  # Doxygen
+  - env:
+      - TEST="Doxygen"
+    branches:
+        only:
+          - master
+    addons:
+      apt:
+        packages:
+          - doxygen
+    script:
+      - doxygen .doxygen.dox
+      - |
+        if [[ -s doxygen_warnings.txt ]]; then
+          echo "You must fix doxygen before submitting a pull request"
+          echo ""
+          cat doxygen_warnings.txt
+          exit -1
+        fi
+        
+    deploy:
+        provider: pages
+        skip_cleanup: true
+        local_dir: docs/html
+        github_token: $GH_REPO_TOKEN
+        on:
+            branch: master
