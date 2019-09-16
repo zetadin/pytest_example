@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Examples of how to use pytest.
+"""@package test_math
+    Examples of how to use pytest.
 
     Run `pytest` to execute tests on all the functions
     in all the .py files in the current folder.

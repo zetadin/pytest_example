@@ -30,6 +30,7 @@ matrix:
         packages:
           - doxygen
     script:
+      - pip install doxypypy
       - doxygen .doxygen.dox
       - |
         if [[ -s doxygen_warnings.txt ]]; then
